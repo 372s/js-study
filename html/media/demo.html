@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+<meta charset="utf-8" />
+<title>@web前端开发</title>
+<link rel="icon" href="KungFu.ico" type="image/x-icon">
+<link rel="shortcut icon" href="KungFu.ico" type="image/x-icon">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="author" content="Joy Du, www.doyoe.com" />
+<meta name="keywords" content="web前端开发" />
+<meta name="description" content="web前端开发" />
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<!-- <script type="text/javascript" src="window.onscroll.js"></script> -->
+<style id="rq1413241">
+* {
+	margin: 0; padding: 0;
+}
+html, body {
+	/* height: auto; */
+	-webkit-overflow-scrolling:touch;
+}
+.title {
+	text-align: center;
+	padding:20px 0;
+}
+.test, .test2 {
+	display: block;
+	height: 150px;
+	border-bottom: 1px solid #cccccc;
+	padding: 20px;
+}
+</style>
+<script>
+$(function() {
+	// alert(typeof(parseInt(window.outerHeight)));
+	// alert($(window).outerHeight());
+	var isAjax = false; /*防止滚动过快，服务端没来得及响应造成多次请求标记*/
+	$(window).scroll(function() {
+		if(isAjax == true) {
+			return false;
+		}
+		var $scrollTop = $(window).scrollTop(), 
+			// $winHeight = $(window).height(),
+			$winHeight = (window.outerHeight > $(window).height()) ? window.outerHeight : $(window).height(),
+			// $winHeight = windowHeight(),
+			$documentHeight = $(document).height();
+
+		if($scrollTop + $winHeight >= $documentHeight ) {
+			$('body').append('<div class="test2">如果你的显示器水平分辨率为1024px的话将能看到本条规则的效果 '+
+			$scrollTop+ ' ' + $winHeight + ' ' + $documentHeight +'</div>');
+			isAjax = false;
+		}
+	});
+})
+
+function scrollTop(){
+	return Math.max(
+		//chrome
+		document.body.scrollTop,
+		//firefox/IE
+		document.documentElement.scrollTop
+		);
+}
+//获取页面文档的总高度
+function documentHeight(){
+	//现代浏览器（IE9+和其他浏览器）和IE8的document.body.scrollHeight和document.documentElement.scrollHeight都可以
+	return Math.max(document.body.scrollHeight,document.documentElement.scrollHeight);
+}
+function windowHeight(){
+	//浏览器兼容性 BackCompat CSS1Compat
+	return (document.compatMode == "CSS1Compat") ? document.documentElement.clientHeight: document.body.clientHeight;
+}
+</script>
+</head>
+<body>
+	<div class="title">Media Queries媒体查询</div>
+	<div class="test">如果你的显示器水平分辨率为1024px的话将能看到本条规则的效果</div>
+	<div class="test2">如果视口宽度为1024px的话将能看到本条规则的效果</div>
+	<div class="test2">如果视口宽度为1024px的话将能看到本条规则的效果</div>
+	<div class="test2">如果视口宽度为1024px的话将能看到本条规则的效果</div>
+	<div class="test2">如果视口宽度为1024px的话将能看到本条规则的效果</div>
+	<div class="test2">如果视口宽度为1024px的话将能看到本条规则的效果</div>
+	<div class="test2">如果视口宽度为1024px的话将能看到本条规则的效果</div>
+</body>
+</html>
+
+			
