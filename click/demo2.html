@@ -1,0 +1,14 @@
+<div>
+    <form action="" method="post">
+        <input type="submit" id="btn"/>
+    </form>
+</div>
+<script type="text/javascript">
+    window.onload=function(){
+        var btn=document.getElementById("btn");
+        btn.setAttribute("disabled","disabled"); //
+        setTimeout(function(){
+            btn.removeAttribute("disabled"); // 
+        },2000);
+    }
+</script>

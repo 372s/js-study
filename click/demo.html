@@ -1,0 +1,47 @@
+<div class="kv_item clear"> 
+    <span class="kv_label fl">验证码</span> 
+    <input name="checkCode" class="i_textshort fl" id="J_checkcode_input" onmousedown="ClearCodeMessage()" type="text" maxlength="6" autocomplete="off" onblur="CheckCode()" /> 
+    <img src="../../AjaxServer/CheckCodePic.ashx" height="28" id="vimg" alt="" style="float:left;margin:-1px 0 0 3px"/> 
+    <a id="J_refresh_checkcode" onclick="change()">看不清，换一张</a> 
+    <div class="msg msg-inline msg-weak hide" id="J_checkcode_tip"> 
+    <div class="msg-default msg-error"> 
+    <i class="msg-icon"></i> 
+    <div class="msg-content"> 
+    </div> 
+    </div> 
+    </div> 
+</div>
+<script type="text/javascript" language="javascript"> 
+var wait = 60; 
+function change() { 
+    $o = $("#J_refresh_checkcode"); 
+    if(wait == 0) { 
+        $o.removeAttr("disabled"); 
+        $o.html("看不清？换一张"); 
+        wait = 60; 
+    } else { 
+        $o.attr("disabled", true); 
+        $o.attr("font-color", "gray"); 
+        $o.html(wait + "秒后可重新获取"); 
+        wait--; 
+        if(wait == 59) { 
+            var imgNode = document.getElementById("vimg"); 
+            imgNode.src = "../../AjaxServer/CheckCodePic.ashx?t=" + (new Date()).valueOf(); // 这里加个时间的参数是为了防止浏览器缓存的问题 
+            $("#J_checkcode_tip").addClass("hide"); 
+            $("#J_checkcode_tip>div").html(""); 
+            $("#<%=hidPicMessage.ClientID%>").val(""); 
+        } 
+        setTimeout(function() {  change()  }, 1000)
+    } 
+}
+
+var clicktag = 0;
+$('.a_cc').click(function () {
+    if (clicktag == 0) {
+        clicktag = 1;
+        $(this).addClass("a_bb");
+        alert('click触发了');
+        setTimeout(function () { clicktag = 0 }, 5000);
+    }
+});
+</script>

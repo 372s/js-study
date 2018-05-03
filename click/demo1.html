@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<button onclick="fn()">方式一</button>
+<button onclick="alert('只会出现一次哦,之后想点都点不了');this.disabled = true;">方式二</button>
+<body>
+<script>
+    // 1.防止重复点击可以添加标记,第一次点击后变为false,每次点击判断这个标记是true才执行
+    // 2.如果是按钮防止重复点击,可以再按钮点击后,给按钮添加disabled属性,按钮就再也点击不了
+    //第一种方式
+    var flag = true;
+    function fn(){
+        if(flag){
+            flag = false;
+            alert('只会出现一次哦');
+            setTimeout(function () { flag = true }, 5000);
+        }
+    }
+ 
+</script>
+ 
+</body>
+</html>
