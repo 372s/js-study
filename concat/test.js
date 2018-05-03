@@ -3,6 +3,7 @@ var arrOuter = [
 ];
 function flattening(arr) {
     // return [].concat(...arr);
+    return Array.prototype.concat([], ...arr);
     return Array.prototype.concat.call([], ...arr);
 }
 console.log(flattening(arrOuter));
