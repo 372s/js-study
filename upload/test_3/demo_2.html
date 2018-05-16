@@ -1,0 +1,111 @@
+<!DOCTYPE html>  
+<html lang="zh">  
+<head>  
+    <meta charset="UTF-8">  
+    <title>利用js的FormData对象快速收集表单信息及无刷新上传头像</title>  
+    <style>
+        #pat{
+            display: inline-block;
+            width: 200px;
+            height: 20px;  
+            /* border-radius: 5px;   */
+            background-color: #ccc;
+        }  
+        #son{
+            display: inline-block;
+            width: 0;height: 100%;  
+            background: #9cf;  
+            text-align: center;  
+            /* border-radius: 5px */
+        }
+        #face {
+            width: 100px;
+        }
+        label {
+            display: inline-block;
+            width: 100px;
+        }
+        #getfile {
+            display: inline-block;
+            width: 100px;
+            line-height: 30px;
+            background-color: #9cf; 
+            padding: 0 20px;
+            text-align: center
+        }
+        #myfile {
+            width: 140px;
+            height: 30px;
+            position: absolute;
+            top: 0;
+            left: 104px;
+            opacity:0;
+        }
+        #parent {
+            position: relative;
+            overflow: hidden;
+        }
+    </style>  
+</head>  
+<body>  
+<form enctype="multipart/form-data">
+    <p><label> 账 号: </label> <input type="text" name="user"></p>
+    <p><label> 密 码: </label> <input type="password" name="pass"></p>
+    <p id="parent"><label> 头 像: </label> 
+        <span id="getfile">选择文件</span> 
+        <input type="file" name="myfile" id="myfile">
+    </p>
+    <p><label></label> <span id="pat"><span id="son"></span></span></p>
+    <p><label></label> <input type="submit" value="提交"></p>
+</form>  
+
+<div id="showResult" style="display: none">  
+    <p>ajax无刷新界面返回结果：</p>
+    <!-- <p>用户名：<input type="text" id="user" disabled="disabled"></p>
+    <p>密码：<input type="text" id="pass" disabled="disabled"></p> -->
+    <p><label> 头像：</label> <img src="" id="face" style="width:200px;height:200px"> </p>
+</div>
+
+<script type="text/javascript">  
+        var fm = document.getElementsByTagName('form')[0];  
+        fm.onsubmit = function () {  
+            //实例化 FormData对象，同时收集表单的信息，包括普通表单域和文件表单域的信息  
+            var fd = new FormData(fm);
+            var file = document.getElementById('myfile').files[0];
+            //console.log(file);
+            fd.append('myfile', file);
+            console.log(fd);
+            var xhr = new XMLHttpRequest();  
+            xhr.onreadystatechange = function () {  
+                if(xhr.readyState == 4){ 
+                    var info = JSON.parse(xhr.responseText);
+                    // eval("var info="+xhr.responseText); //将json信息转化成js对象  
+                    var result=document.getElementById("showResult"),  
+                        // user=document.getElementById("user"),  
+                        // pass=document.getElementById("pass"),  
+                        face=document.getElementById("face");  
+                    result.style.display='block'; 
+                    console.log(info); 
+                    // user.value=info.user;  
+                    // pass.value=info.pass;  
+                    //face.setAttribute("src",info.face);  
+                    face.src = info.response;
+                }  
+            };  
+            xhr.upload.onprogress=function (evt) {   //事件监听器，获取上传的情况  
+                var loaded=evt.loaded,  //已上传的大小  
+                    total=evt.total,  //总大小  
+                    per=Math.floor((loaded/total)*100)+'%', //转换成百分比  
+                    son=document.getElementById("son");  
+                son.innerHTML=per;  
+                son.style.width=per;
+            }  
+            xhr.open('post','../upload.php', true);    
+            // xhr.setRequestHeader("Content-Type","application/json");
+            // xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+            xhr.send(fd);   //发送数据  
+            return false;   //阻止页面提交  
+        }  
+</script>  
+</body>  
+</html> 

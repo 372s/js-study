@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+//本地上传图片、语音
+function rsc_UploadFile(file) {
+    var mypic = file.files[0];
+    //创建一个FormData空对象，然后使用append方法添加key/value
+    var fd = new FormData();
+    fd.append("myhead", mypic);
+    //上传图片
+    if (resourceManager.currentRscType==1)
+        fd.append("action", "uploadImg");
+    //上传语音
+    else if (resourceManager.currentRscType==3)
+        fd.append("action", "uploadVic");
+    //上传视频
+    else if (resourceManager.currentRscType == 5) 
+        fd.append("action", "uploadVdo");
+    if (resourceManager.currentRscType == 1 || resourceManager.currentRscType == 3)
+        $("#resourceManagerUploadContent").css("height", "330px");
+    else if (resourceManager.currentRscType == 5)
+        $("#resourceManagerUploadContent").css("height", "420px");
+    $("#upRscProcessBar").css("display","block");
+
+    $("#upSelectFileBtn").attr("disabled", "disabled");
+   
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            var data = JSON.parse(xhr.responseText);//如果上传图片成功，则保存
+            if (data.returnValue == 0) {
+                var url = '';
+                var sData = '';
+
+                //上传图片
+                if (resourceManager.currentRscType == 1) {
+                    url = GetHost() + data.returnData.tmpImgUrl;                   
+                    sData = Base.encode('{"action":"saveImg","iu":"' + url + '"}');
+                }//上传语音
+                else if (resourceManager.currentRscType == 3) {
+                    url = GetHost() + data.returnData.vicUrl;
+                    var duration = data.returnData.duration;                   
+                    sData = Base.encode('{"action":"saveVic","vu":"' + url + '","dt":"' + duration + '"}');
+                } else if (resourceManager.currentRscType == 5) {
+                    url = GetHost() + data.returnData.vdoUrl;
+                    var duration = data.returnData.duration;
+                    var frontCover = GetHost() + data.returnData.tmpImgUrl;                   
+                    var sData = Base.encode('{"action":"saveVdo","vu":"' + url + '","fc":"' + frontCover + '","dt":"' + duration + '"}');
+                }
+                    
+                $.ajax({
+                    type: 'POST',
+                    url: GetHost() + 'tyadmin/Resource/index.ashx',
+                    data: sData,
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    success: function (data) {
+                        if (data) {
+                            if (data.returnValue == 0) {
+                                //自动点击当前选中的资源组并加载图片
+                                if (group && group > 0 && resourceManager.groups && resourceManager.groups.length > 0) {
+                                    try {
+                                        resourceManager.isLocalUpload = true;
+                                        $("#resourceGroup_" + group).click();
+                                    } catch (e) { console.log(e); }
+                                }
+
+                                //关闭图片上传窗体
+                                closeUploadWin();
+                            } else alert(data.returnMsg);
+                        } else {
+                            if (resourceManager.currentRscType == 1)
+                                alert("图片上传失败，请重试！");
+                            else if (resourceManager.currentRscType == 3)
+                                alert("语音上传失败，请重试！");
+                            else if (resourceManager.currentRscType == 5)
+                                alert("视频上传失败，请重试！");
+                        }
+                        $("#rscUpload").val("");
+                    },
+                    error: function (msg) {
+                        alert(msg.responseText);
+                    }
+                });
+               
+            } else alert(data.returnMsg);
+
+            $("#upSelectFileBtn").removeAttr("disabled");
+        }
+    }
+
+    //侦查当前附件上传情况
+    xhr.upload.onprogress = function (evt) {
+
+        //侦查附件上传情况
+        //通过事件对象侦查
+        //该匿名函数表达式大概0.1秒执行一次
+
+        var loaded = evt.loaded;//已经上传大小情况
+        var tot = evt.total;//附件总大小
+        var per = Math.floor(100 * loaded / tot);  //已经上传的百分比
+        try {
+            //如果点击 返回 按钮，则中断文件的传输
+            if (_isRSCXMLHttpAbort) {
+                xhr.abort();               
+            }
+            
+            //百分比
+            var txtProgress = $("#txtProgress");            
+            txtProgress.html(per + "%");
+            //进度条
+            $(".upRscProcessContent").css("width", per + "%");            
+        } catch (e) { }
+    }
+
+    xhr.open("post", GetHost() + 'tyadmin/Resource/index.ashx');
+    xhr.send(fd);
+}
+</script>
