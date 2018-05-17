@@ -10,3 +10,4 @@ upload_max_filesize = 500K
 ```php
 max_input_vars
 ```
+
