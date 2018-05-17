@@ -1,0 +1,89 @@
+<script src="../jquery-1.11.3.min.js"></script>
+<!-- <script src="../ajaxFileUpload_2/ajaxFileUpload.js"></script> -->
+<style>
+    #container {
+        /* display: inline-block; */
+        width: 300px;
+        height: 20px;
+        border: 1px solid darkseagreen;
+    }
+    #container span{
+        display: inline-block;
+        line-height: 20px;
+        width: 0;
+        max-width: 300px;
+        background-color:darkseagreen;
+        text-align: center;
+        font-size: 12px;
+    }
+    #myfile {
+        display: none;
+    }
+    label {
+        display: block;
+        width: 300px;
+        line-height: 20px;
+        background-color: cornflowerblue;
+        border: 1px solid cornflowerblue;
+        text-align: center;
+    }
+</style>
+<form enctype="multipart/form-data" action="../upload.php" method="POST">
+    <!-- MAX_FILE_SIZE must precede the file input field -->
+    <input type="hidden" name="MAX_FILE_SIZE" value="30000" />
+    <!-- Name of input element determines name in $_FILES array --> 
+    <p>
+        <label for="myfile" style=""> Select files </label> 
+        <input name="myfile" type="file" id="myfile" onchange="myfun(this.files[0])"/>
+    </p>
+    <!-- <input type="submit" value="Send File" /> -->
+
+    <div id="container"><span></span></div>
+</form>
+
+<script>
+function myfun(obj) {
+    var fd = new FormData();
+    fd.append("myfile", obj);
+    $.ajax({
+        url : '../upload.php',
+        type: "POST",
+        // dataType: 'json',
+        processData: false,
+        contentType: false,
+        data: fd,
+        xhr: function () {
+            myXhr = $.ajaxSettings.xhr();
+            // if(myXhr.upload){ // check if upload property exists
+            //     myXhr.upload.addEventListener('progress',function(e){                            
+            //         var loaded = e.loaded;                  //已经上传大小情况 
+            //         var total = e.total;                      //附件总大小 
+            //         var percent = Math.floor(100*loaded/total)+"%";     //已经上传的百分比  
+            //         console.log('DONE : '+percent);                 
+            //         //$("#processBar").css("width",percent);                                                                
+            //     }, false); // for handling the progress of the upload
+            // }
+            // return myXhr;
+            myXhr.upload.onprogress = function(e){                            
+                var loaded = e.loaded; //已经上传大小情况 
+                var total = e.total; //附件总大小 
+                var percent = Math.floor(loaded/total*100)+"%"; //已经上传的百分比  
+                console.log('DONE : '+percent);
+                $("#container span").html(percent);
+                $("#container span").css("width",percent);
+            } // for handling the progress of the upload
+            return myXhr;
+        },
+        success: function (data, status, xhr) {
+            //console.log(status);
+            //console.log(xhr);
+            //$('#container').html(data);
+            
+        },
+        complete: function(xhr, status){
+            // console.log(xhr);
+            console.log(status)
+        }
+    })
+}
+</script>
