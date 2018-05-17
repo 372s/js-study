@@ -8,7 +8,7 @@
     </p>
     <p id="test-file-info"></p>
 
-    <p><button type="submit">Submit</button></p>
+    <!-- <p><button type="submit">Submit</button></p> -->
 </form>
 
 <script>
