@@ -13,6 +13,11 @@ if ($error > 0) {
     // $name = iconv("UTF-8","gb2312", $name);
     $ext = substr($name, strrpos($name, '.'));
     $name = md5($name).$ext;
+
+    if (! is_dir('uploaded/')) {
+        mkdir('uploaded/', 0777, true);        
+    }
+    
     move_uploaded_file($temp, "uploaded/" .$name);
     echo json_encode(array('code' => 0, 'error' =>'', 'response' => "/test_git/upload/uploaded/" .$name));
 }
