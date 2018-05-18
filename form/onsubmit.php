@@ -1,7 +1,13 @@
-<script src="js-md5.js"></script>
-<script src="md5.js"></script>
+<?php
+var_dump($_POST);
+// var_dump(md5($_POST['pwd']));
+var_dump($_FILES);
+?>
+
+<script src="../plug-in/js-md5.js"></script>
+<script src="../plug-in/md5.js"></script>
 <!-- HTML -->
-<form action="form_do.php" id="login-form" method="post" onsubmit="return checkForm();" enctype="multipart/form-data">
+<form action="onsubmit.php" id="login-form" method="post" onsubmit="return checkForm();" enctype="multipart/form-data">
 
     <p>username: <input type="text" id="username" name="username"></p>
 
