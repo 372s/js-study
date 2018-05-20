@@ -30,20 +30,24 @@ jQuery.extend({
         var formId = 'jUploadForm' + id;
         var fileId = 'jUploadFile' + id;
         var form = jQuery('<form  action="" method="POST" name="' + formId + '" id="' + formId + '" enctype="multipart/form-data"></form>');
-        /********************原版 bug 已解决 **********************/
-        /*for (var i in fileElementId) {   //原版
+        
+        if (Object.prototype.toString.call(fileElementId) == '[object Array]') {
+            /********************原版 bug 已解决 **********************/
+            for (var i in fileElementId) {   //原版
+                var oldElement = jQuery('#' + fileElementId[i]);
+                var newElement = jQuery(oldElement).clone();
+                jQuery(oldElement).attr('id', fileId + i);
+                jQuery(oldElement).before(newElement);
+                jQuery(oldElement).appendTo(form);
+            }
+        } else {
+            //修改版
             var oldElement = jQuery('#' + fileElementId);
             var newElement = jQuery(oldElement).clone();
             jQuery(oldElement).attr('id', fileId);
             jQuery(oldElement).before(newElement);
             jQuery(oldElement).appendTo(form);
-        }*/
-        //修改版
-        var oldElement = jQuery('#' + fileElementId);
-        var newElement = jQuery(oldElement).clone();
-        jQuery(oldElement).attr('id', fileId);
-        jQuery(oldElement).before(newElement);
-        jQuery(oldElement).appendTo(form);
+        }
         
         //set attributes
         jQuery(form).css('position', 'absolute');
@@ -62,7 +66,8 @@ jQuery.extend({
         // TODO introduce global settings, allowing the client to modify them for all requests, not only timeout  
         s = jQuery.extend({},
         jQuery.ajaxSettings, s);
-        var id = s.fileElementId;
+        // var id = s.fileElementId;
+        var id = 'fileElementId';
         var form = jQuery.createUploadForm(id, s.fileElementId, s.data);
         var io = jQuery.createUploadIframe(id, s.secureuri);
         var frameId = 'jUploadFrame' + id;
@@ -207,5 +212,17 @@ jQuery.extend({
         }
 
         return data;
+    },
+    handleError: function (s, xhr, status, e) {
+        // If a local callback was specified, fire it
+        if (s.error) {
+            s.error.call(s.context || s, xhr, status, e);
+        }
+
+        // Fire the global callback
+        if (s.global) {
+            (s.context ? jQuery(s.context) : jQuery.event).trigger(
+                "ajaxError", [xhr, s, e]);
+        }
     }
 });

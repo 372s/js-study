@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../jquery-1.11.3.min.js"></script>
+    <script src="./ajaxFileUpload.js"></script>
+    <style>
+        /* * {
+            margin: 0;padding: 0px;
+        } */
+        .upload_multiple {
+            display: inline-block;
+            position: relative;
+            background-color: aquamarine;
+            width: 218.367px;
+        }
+        .file {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+        }
+        .container {
+            position: relative;
+        }
+        .myfile {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+        }
+        li {
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <!-- <input id="firstfile1" type="file" name="myfile[]" multiple> -->
+    <!-- <input id="firstfile2" type="file" name="myfile"> -->
+
+    <div class="upload_multiple">
+        <div class="button"> 选择文件 </div>
+        <input type="file" class="file">
+        <!-- <input type="file" name="" id=""> -->
+    </div>
+    <button onclick="upload()">上传</button>
+    <ul class="container"></ul>
+    <script>
+        // var arr = ["firstfile1", "firstfile2"];
+        // console.log(Object.prototype.toString.call(arr));
+        // console.log(typeof arr);
+        // console.log(arr instanceof Array);
+        // function isArray(o) {
+        //     return Object.prototype.toString.call(o) == '[object Array]';
+        // }
+        // console.log(isArray(arr));
+        // console.log($.isArray(arr) );// 3.2版本废除
+            
+        var flag = 1;
+        var _file = $('.file')[0];
+        _file.onchange = function() {
+            var container = $('.container');
+            var new_file = $('.file').clone();
+            var span = $('<span></span>');
+            var li = $('<li></li>');
+            var name = $('.file').prop('files')[0].name;
+            span.html(name);
+            new_file.removeAttr('class').attr({ 'id': 'file' + flag, 'class':'myfile', 'name': 'myfile[]'});
+            new_file.appendTo(li);
+            span.appendTo(li);
+            li.appendTo(container);
+            flag++;
+        }
+
+        function upload() {
+            var _multiple = $('.container').find('input');
+            var arr = new Array();
+            _multiple.each(function(e, element){
+                // arr[e] = $('.container').children().eq(e).attr('id');
+                arr[e] = $(element).attr('id');
+            });
+            // console.log(arr);
+            // return false;
+            $.ajaxFileUpload ({
+                url: '../upload_multiple.php', //用于文件上传的服务器端请求地址
+                type: 'post',
+                secureuri: false, //是否需要安全协议，一般设置为false
+                fileElementId: arr, //文件上传域的ID
+                // fileElementId: "firstfile1", //文件上传域的ID
+                data: {
+                    "userId": 1
+                },//一同上传的数据
+                dataType: 'json', //返回值类型一般设置为json
+                success: function (data, status){
+                    //服务器成功响应处理函数
+                    console.log(data);
+                    var _data = $('<li>'+ JSON.stringify(data) +'</li>');
+                    $('.container').append(_data);
+                    
+                }
+            })
+        }
+    </script>
+</body>
+</html>
