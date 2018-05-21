@@ -13,41 +13,44 @@
 ?>
 <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script>
-// setWxCookie("_wx_window_click_");
-delWxCookie("_wx_window_click_");
-if (getWxCookie('_wx_window_click_') == null) { // || getWxCookie('_wx_window_click_') == null // null不能用===
-	alert("无");
-} else {
-	alert("有");
-}
+    // delWxCookie("_wx_window_click_");
+    setWxCookie("_wx_window_click_");
+    console.log(getWxCookie('_wx_window_click_'));
 
-// 存cookie，记录弹框
-function setWxCookie(name)
-{
-    var date = new Date();  //获取当前时间
-    date.setTime(date.getTime()+300*1000); //获取30秒后的时间戳
-    document.cookie = name+"=1;expires="+date.toGMTString();
-}
-
-// 定义一个函数，用来读取特定的cookie值。
-function getWxCookie(cookie_name)
-{
-    var cookies = document.cookie ? document.cookie.split(';') : [];
-    var c;
-    for(var i=0; i<cookies.length; i++){
-        c = cookies[i].split('=');
-        if (c[0].replace(' ', '') === cookie_name) {
-            return c[1];
-        }
+    if (getWxCookie('_wx_window_click_') != null) { // || getWxCookie('_wx_window_click_') == null // null不能用===
+    	alert("Yes");
+    } else {
+    	alert("No");
     }
-}
 
-function delWxCookie(name)
-{
-	var exp = new Date();
-	exp.setTime(exp.getTime() - 1);
-	var cval = getWxCookie(name);
-	if(cval != null)
-	document.cookie= name + "="+cval+";expires="+exp.toGMTString();
-}
+    // 存cookie，记录弹框
+    function setWxCookie(name)
+    {
+        var date = new Date();  //获取当前时间
+        date.setTime(date.getTime()+60*60*24*1000); //获取30秒后的时间戳
+        document.cookie = name+"=1;expires="+date.toGMTString();
+    }
+
+    // 定义一个函数，用来读取特定的cookie值。
+    function getWxCookie(cookie_name)
+    {
+        var cookies = document.cookie ? document.cookie.split(';') : [];
+        var c;
+        for(var i=0; i<cookies.length; i++){
+            c = cookies[i].split('=');
+            if (c[0].replace(' ', '') === cookie_name) {
+                return c[1];
+            }
+        }
+        return null;
+    }
+
+    function delWxCookie(name)
+    {
+        var exp = new Date();
+        exp.setTime(exp.getTime() - 1);
+        var cval = getWxCookie(name);
+        if(cval != null)
+            document.cookie= name + "="+cval+";expires="+exp.toGMTString();
+    }
 </script>
