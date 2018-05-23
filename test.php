@@ -57,3 +57,7 @@ $sFileName = sprintf('%09d', $iFile);
 echo $sFileName . "\n";
 $aFileName = str_split($sFileName, 3);
 print_r(implode('/', $aFileName));
+
+// array_column();
+
+echo "\n".(time()-1527053644);
