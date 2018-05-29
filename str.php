@@ -1,6 +1,6 @@
 <?php
-var_dump(1==1);die;
-echo date('Y-m-d H:i:s', '1427472000');die;
+// var_dump(1==1);die;
+// echo date('Y-m-d H:i:s', '1427472000');die;
 
 $favcolor="green";
 switch ($favcolor)
