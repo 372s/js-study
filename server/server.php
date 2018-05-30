@@ -56,7 +56,9 @@ $indicesServer = array('PHP_SELF',
 	'AUTH_TYPE', 
 	'PATH_INFO', 
 	'ORIG_PATH_INFO',
-	'REMOTE_ADDR'
+	'REMOTE_ADDR',
+	'CONTENT_LENGTH',
+	'HTTP_X_FILE_NAME',
 );
 
 echo '<table cellpadding="10">' ; 

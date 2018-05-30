@@ -78,7 +78,8 @@
             var xhr = new XMLHttpRequest();  
             xhr.onreadystatechange = function () {  
                 if(xhr.readyState == 4 && xhr.status == 200){ 
-                    console.log(xhr);
+                    //console.log(xhr);
+                    console.log(xhr.responseText);
                     var info = JSON.parse(xhr.responseText);
                     // eval("var info="+xhr.responseText); //将json信息转化成js对象  
                     var result=document.getElementById("showResult"),  

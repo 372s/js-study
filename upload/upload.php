@@ -1,5 +1,5 @@
 <?php
-// echo json_encode($_FILES['myfile']);die;
+echo json_encode(array($_SERVER['HTTP_X_FILE_NAME']));die;
 // print_r($_FILES['myfile']);die;
 $name= $_FILES["myfile"]["name"];
 $type= $_FILES["myfile"]["type"];
