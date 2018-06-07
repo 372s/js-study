@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>学习记录</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .content {
+            margin: 4%;
+            height: 2000px;
+            position: relative;
+        }
+        #grad {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            /* background-image: linear-gradient(-180deg, rgba(255,255,255,0) 0, #FFFFFF 100%); */
+            /* background-image: -webkit-linear-gradient(-180deg, rgba(255,255,255,0) 0, #FFFFFF 100%);      */
+            background-image: linear-gradient(to bottom, rgba(255,255,255,0) 0, #FFFFFF 100%);
+            background-image: -webkit-linear-gradient(to bottom, rgba(255,255,255,0) 0, #FFFFFF 100%);         
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h3>background-image:</h3>
+        <p>对于linear-gradient()我学习的时候，查了很多资料，但是发现不管是网上还是一些书籍，都没有将这个属性的运用讲得明白，清楚，对此，我写了这篇博客，虽然不能保证每一位读者都能够看懂，但是也希望这篇博客能为你提供一些帮助，如有问题，请在博客中提出，谢谢。</p>
+
+        <P>首先给大家讲的就是兼容性，在IE浏览器中这个属性的设置是不兼容的，当然在IE浏览器中也可以实现类似的效果，那边是滤镜(fliter)的作用了.其他的不同的浏览器也是有不同的，比如chrome一般要加-webkit-前缀，如：-webkit-linear-gradient，比如opera就是-o-linear-gradient。</P>
+        
+        <p>是属于CSS3中Gradient中的两个属性一个，这两个属性分别为linear-gradient（线性渐变）和radial-gradient（径性渐变）,其中linear-gradient线性渐变呈现线性变化，大家一看名称就可以知道这相当于是直线变化，比如充左上角到右下角的变化，或者从上到下，而radial-gradient径性渐变呈现径性变化，这便是大家经常见到的圆圈渐变效果，从图像的中间向四周进行变化，像是大家仍块石头到河里荡起的涟漪一样。而本片博客则是讲解linear-gradient,当然，linear-gradient和radial-gradient是相通的，他的使用方法一样，则是呈现的效果不同而已。</P>
+        <div id="grad"> </div>
+    </div>
+</body>
+</html>
+
+

@@ -1,0 +1,78 @@
+<html>  
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Document</title>
+<style>
+    .box{ 
+        position:fixed; 
+        right:10px; 
+        bottom: 10px; 
+        height:60px; 
+        width: 100px; 
+        text-align:center; 
+        padding-top:40px; 
+        background-color: lightblue; 
+        border-radius: 20%; 
+        overflow: hidden; 
+    } 
+    .box:hover:before{ 
+        top:50% 
+    } 
+    .box:hover .box-in{ 
+        visibility: hidden; 
+    } 
+    .box:before{ 
+        position: absolute; 
+        top: -50%; 
+        left: 50%; 
+        transform: translate(-50%,-50%); 
+        content:'回到顶部'; 
+        width: 140px; 
+        color:rgb(150, 98, 46); 
+        font-weight:bold; 
+    } 
+    .box-in{ 
+        visibility: visible; 
+        display:inline-block; 
+        height:20px; 
+        width: 20px; 
+        border: 3px solid black; 
+        border-color: white transparent transparent white; 
+        transform:rotate(45deg); 
+    }
+</style>
+</head>
+    
+<body style="height:2000px;">
+    <div>
+        <p>   当使用：top: 50%;left: 50%;， 是以左上角为原点，故不处于中心位置 </p> 
+
+        <p>    translate(-50%,-50%) 作用是，往上（x轴）,左（y轴）移动自身长宽的 50%，以使其居于中心位置 </p>
+    </div>
+    <div>
+        <p>   当使用：top: 50%;left: 50%;， 是以左上角为原点，故不处于中心位置 </p> 
+
+        <p>    translate(-50%,-50%) 作用是，往上（x轴）,左（y轴）移动自身长宽的 50%，以使其居于中心位置 </p>
+    </div>
+    <div id="box" class="box">
+        <div class="box-in"></div>
+    </div>
+<script>
+var timer = null;
+box.onclick = function() {
+    cancelAnimationFrame(timer);
+    timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+            document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+            timer = requestAnimationFrame(fn);
+        } else {
+            cancelAnimationFrame(timer);
+        }
+    });
+}
+</script>
+</body>
+</html>

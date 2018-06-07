@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style> 
+        div
+        {
+            width:100px;
+            height:100px;
+            background:red;
+            position:relative;
+            animation:mymove 5s infinite alternate;
+            -webkit-animation:mymove 5s infinite alternate; /*Safari and Chrome*/
+        }
+        
+        @keyframes mymove
+        {
+            from {left:0px;}
+            to {left:200px;}
+        }
+        
+        @-webkit-keyframes mymove /*Safari and Chrome*/
+        {
+            from {left:0px;}
+            to {left:200px;}
+        }
+        </style>
+</head>
+<body>
+    <p><strong>注意: </strong> Internet Explorer 9 及更早IE版本不支持 animation 属性。</p>
+
+    <div></div>
+</body>
+</html>
