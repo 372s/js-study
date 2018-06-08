@@ -12,7 +12,6 @@
         }
         .content {
             margin: 4%;
-            height: 2000px;
             position: relative;
         }
         #grad {
@@ -22,15 +21,15 @@
             width: 100%;
             height: 100px;
             /* background-image: linear-gradient(-180deg, rgba(255,255,255,0) 0, #FFFFFF 100%); */
-            /* background-image: -webkit-linear-gradient(-180deg, rgba(255,255,255,0) 0, #FFFFFF 100%);      */
+            /* background-image: -webkit-linear-gradient(-180deg, rgba(255,255,255,0) 0, #FFFFFF 100%); */
             background-image: linear-gradient(to bottom, rgba(255,255,255,0) 0, #FFFFFF 100%);
-            background-image: -webkit-linear-gradient(to bottom, rgba(255,255,255,0) 0, #FFFFFF 100%);         
+            background-image: -webkit-linear-gradient(to bottom, rgba(255,255,255,0) 0, #FFFFFF 100%); 
         }
     </style>
 </head>
 <body>
     <div class="content">
-        <h3>background-image:</h3>
+        <h3>background-image:linear-gradient()</h3>
         <p>对于linear-gradient()我学习的时候，查了很多资料，但是发现不管是网上还是一些书籍，都没有将这个属性的运用讲得明白，清楚，对此，我写了这篇博客，虽然不能保证每一位读者都能够看懂，但是也希望这篇博客能为你提供一些帮助，如有问题，请在博客中提出，谢谢。</p>
 
         <P>首先给大家讲的就是兼容性，在IE浏览器中这个属性的设置是不兼容的，当然在IE浏览器中也可以实现类似的效果，那边是滤镜(fliter)的作用了.其他的不同的浏览器也是有不同的，比如chrome一般要加-webkit-前缀，如：-webkit-linear-gradient，比如opera就是-o-linear-gradient。</P>

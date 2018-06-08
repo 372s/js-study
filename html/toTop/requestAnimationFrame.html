@@ -1,0 +1,129 @@
+<html>  
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Document</title>
+<style>
+    .content {
+        margin-bottom: 20px; 
+        line-height: 2;
+    }
+    .box{
+        box-sizing: border-box;
+        position:fixed; 
+        right:10px; 
+        bottom: 10px; 
+        height:60px; 
+        width: 60px; 
+        text-align:center; 
+        padding-top:25px;
+        background-color: lightblue; 
+        border-radius: 20%; 
+        overflow: hidden; 
+    } 
+    .box:hover:before{ 
+        top:50% 
+    } 
+    .box:hover .box-in{ 
+        visibility: hidden; 
+    } 
+    .box:before{ 
+        position: absolute; 
+        top: -50%; 
+        left: 50%; 
+        transform: translate(-50%,-50%); 
+        content:'TOP'; 
+        width: 100%;
+        color:rgb(150, 98, 46); 
+        font-weight:bold; 
+    } 
+    .box-in{
+        visibility: visible; 
+        display:inline-block; 
+        height:15px; 
+        width: 15px; 
+        border: 3px solid black; 
+        border-color: white transparent transparent white; 
+        transform:rotate(45deg); 
+    }
+</style>
+</head>
+    
+<body style="height:5000px;">
+    <p>用到的知识点：</p>
+    <div class="content">
+        <p>（1）requestAnimationFrame，Web中写动画的另一种选择</p>
+
+        HTML5/CSS3时代，我们要在web里做动画选择其实已经很多了:<br>
+
+        你可以用CSS3的animattion+keyframes;<br>
+
+        你也可以用css3的transition;<br>
+
+        你还可以用通过在canvas上作图来实现动画，也可以借助jQuery动画相关的API方便地实现;<br>
+
+        当然最原始的你还可以使用window.setTimout()或者window.setInterval()通过不断更新元素的状态位置等来实现动画，前提是画面的更新频率要达到每秒60次才能让肉眼看到流畅的动画效果。<br>
+
+        现在又多了一种实现动画的方案，那就是还在草案当中的window.requestAnimationFrame()方法。<br>
+
+        window.requestAnimationFrame() 将告知浏览器你马上要开始动画效果了，后者需要在下次动画前调用相应方法来更新画面。这个方法就是传递给window.requestAnimationFrame()的回调函数。<br>
+
+        这个方法原理其实也就跟setTimeout/setInterval差不多，通过递归调用同一方法来不断更新画面以达到动起来的效果，但它优于setTimeout/setInterval的地方在于它是由浏览器专门为动画提供的API，在运行时浏览器会自动优化方法的调用，并且如果页面不是激活状态下的话，动画会自动暂停，有效节省了CPU开销。<br>
+    </div>
+    <div class="content">
+        <p>（2）translate(-50%,-50%)</p>
+        当使用：top: 50%;left: 50%;， 是以左上角为原点，故不处于中心位置；  
+        translate(-50%,-50%) 作用是，往上（x轴）,左（y轴）移动自身长宽的 50%，以使其居于中心位置。<br>
+        transform: translate(-50%,-50%) rotate(45deg); /* translate和rotate先后有区别 */
+    </div>
+    <div id="box" class="box">
+        <div class="box-in"></div>
+    </div>
+
+<!-- 进度条 -->
+    <div id="test" style="width:1px;height:20px;background:#0f0;">0%</div>
+    <div> <input type="button" value="Run" id="run"/></div>
+
+<script>
+    
+var timer = null;
+box.onclick = function() {
+    cancelAnimationFrame(timer);
+    timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+            console.log(oTop);
+            document.body.scrollTop = document.documentElement.scrollTop = oTop - 100;
+            timer = requestAnimationFrame(fn);
+        } else {
+            cancelAnimationFrame(timer);
+        }
+    });
+}
+
+
+
+window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+var start = null;
+var ele = document.getElementById("test");
+var progress = 0;
+
+function step(timestamp) {
+    progress += 1;
+    if (progress <= 100) {
+        ele.style.width = progress + "%";
+        ele.innerHTML = progress + "%";
+        requestAnimationFrame(step);
+    }
+}
+requestAnimationFrame(step);
+document.getElementById("run").addEventListener("click", function() {
+    ele.style.width = 0;
+    progress = 0;
+    requestAnimationFrame(step);
+}, false);
+
+</script>
+</body>
+</html>

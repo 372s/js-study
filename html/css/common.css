@@ -10,19 +10,9 @@ a{
 ul{
     list-style: none;
 }
-
-.nav-content {
-    padding: 4%;
+.clearfix{
+    zoom:1;
 }
-.nav {
-    list-style: none;
-    padding-left: 6%;
-}
-.tab {
-    margin: 2% 0;
-}
-
-.clearfix{zoom:1}
 .clearfix:after {
     visibility: hidden;
     display: block;
