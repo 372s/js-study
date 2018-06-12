@@ -1,136 +1,199 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <script src="../jquery-1.10.1.js"></script>
-    <style>
-        .error {
-            color: red;
-            font-size: 12px
-        }
-        .avatardo {
-            text-decoration: none;
-            display: inline-block;
-            /* line-height: 25px; */
-            padding: 3px;
-            border: 1px solid #ccc;
-            color: #000000;
-            /* border-radius: 3px; */
-            background-color: #ccc;
-            font-size: 12px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Document</title>
+<style>
+.avatardo {
+    text-decoration: none;
+    display: inline-block;
+    /* line-height: 25px; */
+    padding: 3px;
+    border: 1px solid #ccc;
+    color: #000000;
+    /* border-radius: 3px; */
+    background-color: #ccc;
+    font-size: 12px;
+}
+.wrap {
+    margin: 10px;
+}
+label {
+    display: inline-block;
+    width: 100px;
+}
+span .error {
+    color: red;
+}
+</style>
 </head>
 <body>
-    <form action="form_post.php" method="POST" id="form">
-        <table>
-            <tr>
-                <td>
-                    <label for="username"> username </label>
-                </td>
-                <td>
-                    <input type="text" name="username" class="username" id="username">
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="password"> password </label>
-                </td>
-                <td>
-                    <input type="password" name="password" class="password" id="password">
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="avatar"> avatar </label>
-                </td>
-                <td>
-                    <a href="#" class="avatardo">请选择头像</a>
-                    <input type="file" name="avatar" class="avatar" id="avatar" style="display: none;">
-                    <span class="avatar_name"></span>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for=""></label>
-                </td>
-                <td>
-                    <button id="btnAjaxSubmit">ajaxSubmit提交</button>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for=""></label>
-                </td>
-                <td>
-                    <input id="btnAjaxForm" type="submit" value="ajaxForm提交" />
-                </td>
-            </tr>
-        </table>
-    </form>
-
-    <script src="../plug-in/form-4.2.2/src/jquery.form.js"></script>
-    <script src="../plug-in/jquery-validation-1.17.0/dist/jquery.validate.js"></script>
-    <script src="../plug-in/jquery-validation-1.17.0/dist/additional-methods.js"></script>
-    <script src="../plug-in/jquery-validation-1.17.0/src/localization/messages_zh.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('.avatardo').click(function(e) {
-                if (document.getElementById('avatar')) {
-                    document.getElementById('avatar').click();
-                }
-                e.preventDefault();
-            });
-            $('#avatar').change(function() {
-                console.log($('#avatar').prop('files'));
-                $('.avatar_name').html($('#avatar').prop('files')[0].name)
-            });
-            // 验证
-            $("form").validate({
-                // debug: true, //调试模式，即使验证成功也不会跳转到目标页面
-                rules: {     //配置验证规则，key就是被验证的dom对象，value就是调用验证的方法(也是json格式)
-                    username: {
-                        required: true,  //必填。如果验证方法不需要参数，则配置为true
-                        rangelength: [6, 12]
-                    },
-                    password: {
-                        required: true,
-                        rangelength: [6, 12]
-                    },
-                    avatar: {
-                        required: true
-                    }
-                },
-                messages: {
-                    username: {
-                        required: '请输入用户名',
-                    },
-                    password: {
-                        required: '请输入密码',
-                    }
-                }
-            });
-
-            // 表单上传
-            var options = {
-                success: function (data) {
-                    // $("#responseText").text(data);
-                    console.log(data);
-                }
-            };
-
-            // ajaxForm
-            $("#form").ajaxForm(options);
-
-            // ajaxSubmit
-            $("#btnAjaxSubmit").click(function () {
-                $("#form").ajaxSubmit(options);
-                return false;
-            });
+<form action="form_post.php" method="POST" id="form">
+<div class="wrap">
+    <label for="username"> 用户名 </label>
+    <input type="text" name="username" class="username" id="username">
+</div>
+<div class="wrap">
+    <label for="password"> 密码 </label>
+    <input type="password" name="password" class="password" id="password">
+</div>
+<div class="wrap">
+    <label for="gender"> 性别 </label>
+    <input type="radio" name="gender" class="gender" value="1"> 男
+    <input type="radio" name="gender" class="gender" value="2"> 女
+</div>
+<div class="wrap">
+    <label for="hobby"> 兴趣 </label>
+    <!-- <input type="checkbox" name="hobby[]" class="hobby" value="1" required minlength="2"> 读书 -->
+    <input type="checkbox" name="hobby[]" class="hobby" value="1"> 读书
+    <input type="checkbox" name="hobby[]" class="hobby" value="2"> 篮球
+    <!-- <label for="hobby[]" class="error" style="display: none;">Please select at least two types of spam.</label> -->
+</div>
+<div class="wrap">
+    <label for="img"> 写真 </label>
+    <input type="file" name="img" id="img">
+</div>
+<div class="wrap">
+    <label for="avatar"> 头像 </label>
+    <a href="#" class="avatardo">请选择头像</a>
+    <input type="file" name="avatar" class="avatar" id="avatar" style="display: none;">
+    <span class="avatar_name"></span>
+</div>
+<input type="submit" value="ajaxForm提交" />
+</form>
+<div id="responseText"></div>
+<script src="../jquery.version/jquery-1.10.1.js"></script>
+<script src="../plug-in/form-4.2.2/src/jquery.form.js"></script>
+<script src="../plug-in/jquery-validation-1.17.0/dist/jquery.validate.js"></script>
+<script src="../plug-in/jquery-validation-1.17.0/dist/additional-methods.js"></script>
+<script src="../plug-in/jquery-validation-1.17.0/src/localization/messages_zh.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.avatardo').click(function(e) {
+            if (document.getElementById('avatar')) {
+                document.getElementById('avatar').click();
+            }
+            e.preventDefault();
         });
-    </script>
+        $('#avatar').change(function() {
+            // console.log($('#avatar').prop('files'));
+            $('.avatar_name').html($('#avatar').prop('files')[0].name)
+        });
+        // 验证
+        $("#form").validate({
+            focusCleanup: true,
+            focusInvalid:false,
+            rrorElement:"em",
+            wrapper:"span",
+            // debug: true, //调试模式，即使验证成功也不会跳转到目标页面
+            rules: {     //配置验证规则，key就是被验证的dom对象，value就是调用验证的方法(也是json格式)
+                "username": {
+                    required: true,  //必填。如果验证方法不需要参数，则配置为true
+                    rangelength: [6, 12]
+                },
+                "password": {
+                    required: true,
+                    rangelength: [6, 12]
+                },
+                "gender": {
+                    required: true,
+                },
+                "hobby[]": {
+                    required: true,
+                    minlength: 2
+                },
+                "img": {
+                    required: true
+                }
+            },
+            messages: {
+                "username": {
+                    required: '请输入用户名',
+                },
+                "password": {
+                    required: '请输入密码',
+                },
+                "gender": {
+                    required: '请选择性别',
+                },
+                "hobby[]": {
+                    required: '请选择兴趣',
+                    minlength: "至少选择两个"
+                },
+                "img": {
+                    required: '请上传写真'
+                }
+            },
+            errorPlacement:function(error,element){
+                //第一个参数为错误提示信息，第二个参数为HTML中的元素
+                if (element.is(":radio") || element.is(":checkbox")) {
+                    error.appendTo(element.parent())
+                } else {
+                    error.insertAfter(element)
+                }
+                //这里也可以直接写成类名的形式或者id名的形式
+                //error.appendTo(".class")或者error.appendTo("#id");
+            },
+            submitHandler: function(form) {
+                // console.log(form);
+                // alert("开始提交了");
+                $(form).ajaxSubmit({
+                    clearForm: true,
+                    dataType: 'json',
+                    beforeSubmit: function(arr, $form, options) {
+                        console.log(arr);
+                        console.log($form);
+                        console.log(options);
+
+                        // form data array is an array of objects with name and value properties
+                        // [ { name: 'username', value: 'jresig' }, { name: 'password', value: 'secret' } ]
+                        // return false to cancel submit
+                    },
+                    success: function (data, status, xhr) {
+                        $("#responseText").text(data);
+                        console.log(data);
+                    },
+                    error: function(xhr, status, error) {
+
+                    }
+                })
+            } 
+        });
+        $.validator.addMethod("isChecked",function(value,element){
+            console.log(value);
+            console.log(value);
+            return element.checked             
+        }," ！请同意条款"); 
+
+        // 表单上传
+        // ajaxForm
+        // $("#form").ajaxForm(options);
+
+        // ajaxSubmit
+        // $('#form').on('submit', function (e) {
+        //     e.preventDefault(); // prevent native submit
+        //     $(this).ajaxSubmit({
+        //         // target: 'myResultsDiv',     //把服务器返回的内容放入id为output的元素中   
+        //         //url: url,                 //默认是form的action， 如果申明，则会覆盖  
+        //         //type: type,               //默认是form的method（get or post），如果申明，则会覆盖  
+        //         //dataType: null,           //html(默认), xml, script, json...接受服务端返回的类型  
+        //         //clearForm: true,          //成功提交后，清除所有表单元素的值  
+        //         //resetForm: true,          //成功提交后，重置所有表单元素的值  
+        //         timeout: 3000,              //限制请求的时间，当请求大于3秒后，跳出请求  
+        //         beforeSubmit: function(arr, $form, options) {
+        //             // form data array is an array of objects with name and value properties
+        //             // [ { name: 'username', value: 'jresig' }, { name: 'password', value: 'secret' } ]
+        //             // return false to cancel submit
+        //         },
+        //         success: function (data) {
+        //             $("#responseText").text(data);
+        //             console.log(data);
+        //         }
+        //     })
+        // });
+    });
+</script>
 </body>
 </html>
