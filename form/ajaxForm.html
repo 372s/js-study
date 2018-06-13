@@ -53,7 +53,7 @@ span .error {
 </div>
 <div class="wrap">
     <label for="img"> 写真 </label>
-    <input type="file" name="img" id="img">
+    <input type="file" name="img" id="img" defaultValue="123412341234.png">
 </div>
 <div class="wrap">
     <label for="avatar"> 头像 </label>
@@ -85,7 +85,7 @@ span .error {
         $("#form").validate({
             focusCleanup: true,
             focusInvalid:false,
-            rrorElement:"em",
+            rrorElement:"e",
             wrapper:"span",
             // debug: true, //调试模式，即使验证成功也不会跳转到目标页面
             rules: {     //配置验证规则，key就是被验证的dom对象，value就是调用验证的方法(也是json格式)
