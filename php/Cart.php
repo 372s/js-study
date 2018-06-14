@@ -43,21 +43,3 @@ $my_cart->add('eggs', 6);
 // 打出出总价格，其中有 5% 的销售税.
 // print $my_cart->getTotal(0.05) . "\n";
 // 最后结果是 54.29
-
-$number = 1234.56;
-$english_format_number = number_format($number);
-echo $english_format_number . "\n";
-$nombre_format_francais = number_format($number, 2, '.', ',');
-echo $nombre_format_francais . "\n";
-var_dump(intval($nombre_format_francais));
-
-
-$iFile = 423411114323;
-$sFileName = sprintf('%09d', $iFile);
-echo $sFileName . "\n";
-$aFileName = str_split($sFileName, 3);
-print_r(implode('/', $aFileName));
-
-// array_column();
-
-echo "\n".(time()-1527053644);
