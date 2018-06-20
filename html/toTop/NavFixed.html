@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../../jquery.version/jquery-1.11.3.min.js"></script>  
+    <style>
+        body {
+            height: 2000px;
+        }
+        .top-title {
+            background:#e74c3c;
+            color:white;
+            font-size:24px;
+            padding:5px;
+            text-align:center;
+            position: fixed;
+            left:0;
+            top:0;
+            width:100%;
+            transition: top .5s;
+        }
+        .hiddened{
+            top: -90px;
+        }
+        .showed{
+            top:0;
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-title">这是顶部导航条</div>
+    <div class="margint"><p>滚动看效果</p><p>滚动看效果</p></div>
+    <div>jQuery实现页面滚动时顶部动态显示隐藏</div>
+    <div>很多时候你会看到页面上有一个始终固定在网页顶部的导航菜单，当页面向下滚动的时候，导航菜单动态隐藏，页面滚动到顶部时，导航菜单动态显示，淘宝也采用过此效果，很不错，当然，里面使用了CSS3动画效果，不支持低版本浏览器。代码相当的简单，只需几行就搞定。</div>
+</body>
+<script>
+    $(function(){   
+        var winHeight = $(window).scrollTop();
+        // console.log(winHeight);
+        $(window).scroll(function() {
+            var scrollY = $(document).scrollTop();// 获取垂直滚动的距离，即滚动了多少
+            // console.log(scrollY);
+
+            if (scrollY > 550){ //如果滚动距离大于550px则隐藏，否则删除隐藏类
+                $('.top-title').addClass('hiddened');
+            } 
+            else {
+                $('.top-title').removeClass('hiddened');
+            }
+    
+            // if (scrollY > winHeight){ //如果没滚动到顶部，删除显示类，否则添加显示类
+            //     $('.top-title').removeClass('showed');
+            // } else {
+            //     $('.top-title').addClass('showed');
+            // }               
+    
+        });
+    });
+</script>
+</html>

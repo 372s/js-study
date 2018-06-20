@@ -1,0 +1,172 @@
+<script>
+
+/**
+ * 剩余参数
+ * 
+ * 
+ * */  
+
+function multiply(multiplier, ...theArgs) {  
+    return theArgs.map(function(element) {  
+        return multiplier * element;  
+    });  
+}
+var arr = multiply(2, 1, 2, 3);   
+console.log(arr); // [2, 4, 6]  
+
+
+function sortRestArgs(...theArgs) {  
+    var sortedArgs = theArgs.sort();  
+    return sortedArgs;  
+}  
+//好像一位和两位混合不能进行排序，这需要看一下为甚？主要第一个为主  
+console.log(sortRestArgs(5, 3, 7, 1)); // shows 1, 3, 5, 7  
+
+/**
+ * 对于参数对象arguments不能排序 
+ */
+function sortArguments() {  
+    //arguments是参数对象不能直接使用sort()方法，因为不是数组实例，需要转换
+    var sortedArgs = arguments.sort();   
+    return sortedArgs; // this will never happen  
+}  
+// 会抛出类型异常，arguments.sort不是函数  
+// console.log(sortArguments(5, 3, 7, 1));  
+
+
+//以前函数  
+function f(a, b) {  
+    var args = Array.prototype.slice.call(arguments, f.length);  
+    console.log(args);
+}
+f(1,3,3,5);
+
+// 等效于现在  
+function f1(a, b, ...args) {  
+    console.log(args);
+}
+f1(2,3,4,5)
+
+
+
+/**
+ * argument 对象
+ * 
+ * 同数组下标访问实参
+ */
+ function test() {
+    var s = "";
+    for (var i = 0; i < arguments.length; i++) {
+        console.log(arguments[i]); // argument = ["name", "age"] argument=[ ["name", "age"] ]
+        s += arguments[i] + ",";
+    }
+    return s;
+}
+// test("name", "age")  //输出 name age
+// test(["name", "age"]) //输出 ["name", "age"]
+
+
+/**
+ * 实现重载
+ */
+function demo() {
+    switch(arguments.length) {
+        case 0 :
+            console.log(0)
+            break;
+        case 1:
+            console.log(1)
+            break;
+        case 2:
+            console.log(2)
+            break;
+        default:
+            console.log(111111)
+            break;
+    }
+}
+demo("abc", "bbb") //输出 2
+
+
+function doAdd() {
+    if(arguments.length == 1) {
+        console.log(arguments[0] + 5);
+    } else if(arguments.length == 2) {
+        console.log(arguments[0] + arguments[1]);
+    }
+}
+doAdd(10);	//输出 "15"
+doAdd(40, 20);	//输出 "60"
+
+
+/**
+ * argument 属性 callee指向自己
+ * 它指向的是正在被执行的Function对象，最常用的例子就是用来做递归了
+ */
+var sum = function (n) {
+    if (1 == n) {
+        return 1;
+    } else {
+        return n + '+' + arguments.callee(n - 1);
+    }
+}
+console.log(sum(6)); //输出 6+5+4+3+2+1
+
+
+
+/**
+ * prototype的使用
+ */
+function add() {  
+    return Array.prototype.reduce.call(arguments, function(n1, n2) {  
+        return n1 + n2;  
+    });     
+};  
+console.log(add(1,2,3,6,8));  //输出 20
+
+function fn54(){　
+　  //将参数转为一个数组　
+　  var args = Array.prototype.slice.apply(arguments, [0, 1]); // 输出 [ 'name', 'age' ]
+　  console.log(args);　
+} 
+fn54("name", "age", "class"); 
+
+(function fn55(){　
+　  //将参数转为一个数组　
+　  var args = Array.prototype.slice.call(arguments, 0, 1); // 输出 [ 'name', 'age' ]
+　  console.log(args);　
+})("name", "age")
+
+// function fn56() {
+//     console.log(arguments); // 输出 { '0': 'name', '1': 'age' }
+// }
+// fn56("name", "age")
+
+/**
+ * slice除了正常用法，slice 经常用来将 array-like 对象转换为 true array.
+
+名词解释：array-like object – 拥有 length 属性的对象，比如 { 0: 'foo', length: 1 }, 甚至 { length: 'bar' }. 最常见的 array-like 对象是 arguments 和 NodeList. 
+
+关于 slice, 还有一个话题：用 Array.prototype.slice 还是 [].slice ? 从理论上讲，[] 需要创建一个数组，性能上会比 Array.prototype 稍差。但实际上，这两者差不多，就如循环里用 i++ 还是 ++i 一样，纯属个人习惯。 
+
+ */
+/**
+ * 在Array.prototype.slice.call(arguments,0)中，Array.prototype.slice调用的是Array的原型方法，对于正真的数组是有slice()方法，但是对于像arguments或者自己定义的一些类数组对象虽然存在length等若干属性，但是并没有slice()方法，所以对于这种类数组对象就得使用原型方法来使用slice()方法，即Array.prototype.slice（如果在自定义中的类数组对象中自定义了slice()方法，那么自然可以直接调用）。
+
+所以，Array.prototype.slice.call(arguments,0)的意思就可以这样理解：对于arguments类数组，我们调用Array.prototype.slice原型方法，并用call()方法，将作用域限定在arguments中，这里Array.prototype就可以理解为arguments，同参数0为slice()方法的第一个参数，即开始位置索引。通过这种方法就将arguments类数组转换成了真数组。
+
+ 当然，把arguments转换为数组也可以用遍历，那样代码自然就会多一些，而且不够直接。
+ Array.prototype.slice.call(arguments)能将具有length属性的对象转成数组，
+ */
+var a={length:2,0:'first',1:'second'};
+Array.prototype.slice.call(a);// ["first", "second"]
+var a={length:2};
+Array.prototype.slice.call(a);// [undefined, undefined]
+
+var slice = Array.prototype.slice;
+console.log(slice.call({0: 'foo', length: 'bar'})[0]); // ?
+console.log(slice.call(NaN).length); // ?
+console.log(slice.call({0: 'foo', length: '100'})[0]); // ?
+
+
+</script>

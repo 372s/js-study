@@ -1,0 +1,70 @@
+<script>
+
+    Object.prototype.x = 'outer';
+
+    (function () {
+
+        var x = 'inner';
+
+        /*函数foo的作用域链中有一个特殊的对象——用于保存函数的标识符。这个特殊的对象实际上就是{ foo:  }。
+            当通过作用域链解析x时，首先解析的是foo的局部环境。如果没有找到x，则继续搜索作用域链中的下一个对象。下一个对象
+            就是保存函数标识符的那个对象——{ foo:  }，由于该对象继承自Object.prototype，所以在此可以找到x。
+            而这个x的值也就是Object.prototype.x的值（outer）。结果，外部函数的作用域（包含x = 'inner'的作用域）就不会被解析了。 */
+
+        (function foo() {
+
+            console.log(x); // 提示框中显示：outer
+
+        })();
+    })(); 
+
+    var f2 = function g() { };
+        console.log(typeof g); // "function"
+
+        
+    var f3 = function foo() {
+        return typeof foo; // foo是在内部作用域内有效
+    };
+    // foo在外部用于是不可见的
+    console.log(typeof foo); // "undefined"
+    console.log(f3()); // "function" 
+
+    
+
+    var f1 = (function() {
+        console.log(1);
+        return 1;
+    })();
+
+    
+    // 花括号的位置会影响返回结果
+    function func1() {
+        return {
+            name: "Batman"
+        }
+    }
+    console.log(func1()); // { name: "Batman"}
+
+
+    function func2() {
+        return
+        {
+            name: "Batman"
+        }
+    }
+    console.log(func2()); // undefined
+
+
+    var a = 1, b = 2;
+    function fun (x) {
+        var a = 10;
+        return function bar() {
+            var a =  100;
+            b = x + a;
+            return b;
+        }
+        // console.log(bar (2));
+        // console.log(bar (20));
+    }
+    // console.log(fun(1)());
+</script>

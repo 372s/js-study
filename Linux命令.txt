@@ -1,0 +1,3 @@
+﻿grep -ir Listen .   // 查看监听端口
+
+/etc/ini.d/autofs

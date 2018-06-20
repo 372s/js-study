@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .div {
+            width: 100%;
+            height: 300px;
+        }
+        .top {
+            display: none;
+            position: fixed;
+            right: 5px;
+            bottom: 10px;
+            width: 30px;
+            height: 30px;
+            border: 1px #ccc solid;
+            border-radius: 50%;
+            background-color: #ccc;
+        }
+    </style>
+</head>
+<body style="height: 2000px;">
+    <div class="div">
+            有时候需要用到，判断页面是向上还是向下滚动了，兼容比较低版本的浏览器如IE6、7等。 
+
+            原理：拿当前的scrollTop和之前的scrollTop对比 
+            如果变大了，表示向下滚动（scrollTop值变大）； 
+            如果变小了，表示向上滚动（scrollTop值变小）。 
+            
+            难点是理解setTimeout=0时的运行机制。             
+    </div>
+    <div class="top"></div>
+</body>
+<script src="../jquery.version/jquery-1.11.3.min.js"></script>  
+<script>
+    // window.onload = function () {
+    //     document.getElementsByClassName('top').onclick = function(){
+    //         alert(432);
+    //     }
+    // }
+// setTimeout(function(){console.log(1);}, 0);
+// console.log(2);
+// var elements = document.getElementsByClassName('top');
+// for(var i = 0;i < elements.length;i++){
+//     elements[i].onclick = function(){
+//         // document.body.scrollTop = document.documentElement.scrollTop = 0;
+//         scrollTo(0,0);
+//     };
+// }
+
+
+$(document).ready(function(){  
+    var p=0,t=0;
+    $(window).scroll(function(e){  
+        p = $(this).scrollTop();  
+        // console.log(p);
+        // console.log(t);
+        if( t <= p){//下滚  
+            $('.top').css('display', 'none');
+        } else {//上滚  
+            $('.top').css('display', 'block');
+        }
+        setTimeout(function(){t = p;},0);         
+    }); 
+    
+    $('.top').click(function() {
+        $("html,body").animate({scrollTop:0}, 500);
+    })
+});  
+
+</script>
+</html>
