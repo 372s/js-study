@@ -64,7 +64,6 @@ class Curl
     public function curl_request($api, $method = 'GET', $params = array(), $headers = [])
     {
         $curl = curl_init();
-
         switch (strtoupper($method)) {
             case 'GET':
                 if (!empty($params)) {
@@ -85,34 +84,30 @@ class Curl
                 curl_setopt($curl, CURLOPT_POSTFIELDS, $params);
                 break;
         }
-
         curl_setopt($curl, CURLOPT_URL, $api);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($curl, CURLOPT_HEADER, 0);
-
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-
         $response = curl_exec($curl);
-
+        // var_dump($response);
         if ($response === false) {
-            $error = curl_error($curl);
+            curl_error($curl);
             curl_close($curl);
-            return false;
+            return array();
         } else {
             $response = json_decode($response, true);
         }
-
         curl_close($curl);
-
         return $response;
     }
 }
 
-//get请求
-// $curl = new Curl();
-// $url="http://192.168.188.193/curl_return.php";
-// // $str=$curl->https_post($url, array('name' => 'name'));
-// $str=$curl->https_request($url, 'POST', array('name' => 'name'));
-// // echo file_get_contents($url);
-// echo $str;
+$curl = new Curl();
+$url = "http://api.medlive.test/adcms/ads";
+$params = array('platform' => 2, 'branch' => 0, 'type' => 0, 'post' => 139604);
+$headers = array('Api-Key:34819d7beeabb9260a5c854bc85b3e44');
+// $str=$curl->https_post($url, array('name' => 'name'));
+// $str = $curl->https_get($url);
+$str = $curl->curl_request($url, 'GET', $params, $headers);
+var_dump($str);
