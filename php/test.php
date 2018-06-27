@@ -1210,7 +1210,7 @@ $format = function ($iFile) {
     $aFileName = str_split($sFileName, 3);
     echo implode('/', $aFileName) . "<br/>";
 };
-// array_walk($arr2, $format);die;
+array_walk($arr2, $format);die;
 
 // var_dump(@unlink('./uploads/a.php'));die;
 // echo __DIR__ . "\n";
