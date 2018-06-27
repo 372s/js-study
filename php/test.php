@@ -1217,33 +1217,51 @@ array_walk($arr2, $format);die;
 // echo dirname(__DIR__)."\n";
 // die;
 
-echo PHP_SHLIB_SUFFIX;die;
-$target = __DIR__ . '/a.txt';
-// echo file_get_contents($target);die;
-$link = __DIR__ . '/uploads/a.php';
-symlink($target, $link);
-echo readlink($link);die;
+// echo microtime();die;
 
-$downloaddir = './uplaods';
-$filename = 'test.php';
-$safedir = '../php';
+function make_seed()
+{
+    list($usec, $sec) = explode(' ', microtime());
+    return (float) $sec + ((float) $usec * 100000);
+}
+srand(make_seed());
+$randval = rand();
+// echo $randval . "\n" . strlen($randval);die;
+
 $letters = 'abcdefghijklmnopqrstuvwxyz';
-srand((double) microtime() * 1000000);
 $string = '';
-for ($i = 1; $i <= rand(4, 12); $i++) {
+for ($i = 1; $i <= 6; $i++) {
     $q = rand(1, 24);
     $string = $string . $letters[$q];
 }
+// echo strtoupper($string);die; // strtolower() strstr() strrchr()
+
+// echo md5_file('a.txt') . "\n";
+// echo md5_file('b.txt') . "\n";die;
+
+// echo PHP_SHLIB_SUFFIX;die; // dll
+$target = __DIR__ . '/uploads/a.txt';
+echo __FILE__;
+echo file_get_contents($target);die;
+
+$downloaddir = 'uploads';
+// $filename = 'test.php';
+// $letters = 'abcdefghijklmnopqrstuvwxyz';
+// srand((double) microtime() * 1000000);
+// $string = '';
+// for ($i = 1; $i <= rand(4, 12); $i++) {
+//     $q = rand(1, 24);
+//     $string = $string . $letters[$q];
+// }
 $handle = opendir($downloaddir);
 while ($dir = readdir($handle)) {
-    var_dump($dir);
-    // if (is_dir($downloaddir . $dir)) {
-    //     var_dump($dir);
-    //     if ($dir != "." && $dir != "..") {
-    //         @unlink($downloaddir . $dir . "/" . $filename);
-    //         @rmdir($downloaddir . $dir);
-    //     }
-    // }
+    if (is_file($downloaddir . '/' . $dir)) {
+        if ($dir != "." && $dir != "..") {
+            var_dump($dir);
+            // @unlink($downloaddir . $dir . "/" . $filename);
+            // @rmdir($downloaddir . $dir);
+        }
+    }
 }
 // closedir($handle);
 // mkdir($downloaddir . $string, 0777);

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../jquery.version/jquery-1.10.1.js"></script>
+    <script src="../plug-in/form-4.2.2/dist/jquery.form.js"></script>
+</head>
+
+<body>
+    <form action="form_post.php" method="POST">
+        <input type="text" name="name">
+        <input type="submit" value="ajaxForm">
+        <input type="submit" value="ajaxSubmit">
+    </form>
+</body>
+<script>
+    $(function () {
+        //$('form').ajaxSubmit.debug = true;
+        $('form').ajaxForm({
+            success: function (data, status, xhr) {
+                console.log(data);
+            }
+        });
+        // $('#form').on('submit', function (e) {
+        //     e.preventDefault();
+        //     $('form').ajaxSubmit({});
+        // })
+
+    })
+</script>
+
+</html>

@@ -1,0 +1,43 @@
+<?php
+/**
+ * 
+ * @authors Your Name (you@example.org)
+ * @date    2018-06-22 12:18:38
+ * @version $Id$
+ */
+FilterExt::run('GET', array(
+    'platform' => 'int',
+    'branch' => 'int',
+    'type' => 'int',
+    'post' => 'int',
+));
+Page::noSend();
+
+$platform = sg($_GET['platform']);
+$branch = sg($_GET['branch']);
+$type = sg($_GET['type']);
+$post = sg($_GET['post']);
+ld($_GET);
+
+$apikey = '34819d7beeabb9260a5c854bc85b3e44';
+
+$aRtn = ApiUtilFacade::initRtnInfo();
+
+$headers = getallheaders();
+// ld($headers);
+if (array_key_exists('Api-Key', $headers)) {
+    if ($headers['Api-Key'] !== $apikey) {
+        $error = '错误请求';
+    }
+} else {
+    $error = '错误请求';
+}
+if (isset($error)) {
+    ApiUtilFacade::error($error, 40000);
+} else {
+    $aRtn['data_list'] = AdCmsFacade::getSearchAd($platform, $branch, $type, $post);
+    $aRtn['success_msg'] = 'success';
+}
+ld(AdCmsFacade::getSearchAd($platform, $branch, $type, $post));
+
+ApiUtilFacade::echoData($aRtn);

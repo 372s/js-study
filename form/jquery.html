@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- <script type="text/javascript" src="../jquery.version/jquery-1.8.3.js"></script> -->
+    <script type="text/javascript" src="../jquery.version/jquery-1.10.1.js"></script>
+    <!-- <script type="text/javascript" src="../jquery.version/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="../jquery.version/jquery-3.3.1.min.js"></script> -->
+    <style>
+        li {
+            margin: 3px;
+            padding: 3px;
+            background: #EEEEEE;
+        }
+
+        li.hilight {
+            background: yellow;
+        }
+    </style>
+</head>
+
+<body>
+    <ul>
+        <li>
+            <b>Click me!</b>
+        </li>
+        <li>You can also
+            <b>Click me!</b>
+        </li>
+    </ul>
+
+    <p id="p1" onmousedown="getEventTrigger(event)">
+        Click on this paragraph. An alert box will show which element triggered the event.</p>
+    <script>
+        $(document).bind("click", function (e) {
+            console.log(e.target);
+            console.log(e.currentTarget);
+            $(e.target).closest("li").toggleClass("hilight");
+        });
+
+        // 1.9版本移除
+        // $("li").toggle(
+        //     function () {
+        //         console.log(1);
+        //     }, function () {
+        //         console.log(2);
+        //     }
+        // );
+
+        var flag = 1;
+        $("li").click(function () {
+            if (flag == 1) {
+                console.log(1);
+                flag = 0;
+            } else {
+                console.log(2);
+                flag = 1;
+            }
+        });
+
+        function getEventTrigger(event) {
+            x = event.target;
+            alert("The id of the triggered element: " + x.id);
+        }
+
+        // $('li').on('click', function () {
+        //     alert($(this).text());
+        // });
+        // $('li').trigger('click');
+
+        $("li").hover(
+            function () {
+                console.log(111);
+            },
+            function () {
+                console.log(222);
+            }
+        );
+
+    </script>
+</body>
+
+</html>
