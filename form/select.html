@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .selectpicker .dropdown-toggle {
+            position: relative;
+            text-align: left;
+            border-radius: 0;
+            text-align: left;
+        }
+
+        .btn-group-lg>.btn,
+        .btn-lg {
+            padding: 10px 16px;
+            font-size: 18px;
+            line-height: 1.3333333;
+            border-radius: 6px;
+        }
+
+        .selectpicker .dropdown-toggle span.placeholder {
+            color: #959595;
+        }
+
+        .selectpicker .dropdown-toggle span.placeholder,
+        .selectpicker .dropdown-toggle span.text {
+            float: left;
+        }
+
+        .caret {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background: url('./images/select.png') no-repeat center;
+            background-size: 50px 50px;
+        }
+
+        .selectpicker .dropdown-menu {
+            width: 100%;
+            padding: 5px 0 0;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 57px;
+            left: 0;
+            z-index: 1000;
+            display: block;
+            float: left;
+            width: 160px;
+            padding: 5px 0;
+            margin: 2px 0 0;
+            list-style: none;
+            font-size: 14px;
+            text-align: left;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border: 1px solid rgba(0, 0, 0, .15);
+            border-radius: 4px;
+            -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+            background-clip: padding-box;
+        }
+
+        .live-filtering {
+            position: relative;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            margin: -1px;
+            padding: 0;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+
+        .selectpicker .dropdown-menu .search-box {
+            padding: 5px 8px;
+        }
+
+        .input-group {
+            position: relative;
+            display: table;
+            border-collapse: separate;
+        }
+
+        .input-group-addon:first-child {
+            border-right: 0;
+        }
+
+        .input-group .form-control:first-child,
+        .input-group-addon:first-child,
+        .input-group-btn:first-child>.btn,
+        .input-group-btn:first-child>.btn-group>.btn,
+        .input-group-btn:first-child>.dropdown-toggle,
+        .input-group-btn:last-child>.btn-group:not(:last-child)>.btn,
+        .input-group-btn:last-child>.btn:not(:last-child):not(.dropdown-toggle) {
+            border-bottom-right-radius: 0;
+            border-top-right-radius: 0;
+        }
+
+        .input-group-addon {
+            padding: 6px 12px;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1;
+            color: #555;
+            text-align: center;
+            background-color: #eee;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .input-group-addon,
+        .input-group-btn {
+            width: 1%;
+            white-space: nowrap;
+            vertical-align: middle;
+        }
+
+        .input-group .form-control,
+        .input-group-addon,
+        .input-group-btn {
+            display: table-cell;
+        }
+
+        .hide {
+            display: none !important;
+        }
+
+        .selectpicker .list-to-filter {
+            max-height: 350px;
+            overflow-y: scroll;
+            border-top: 1px solid #e6e6e6;
+        }
+
+        .selectpicker .dropdown-menu ul {
+            margin-top: 4px;
+        }
+
+        .list-unstyled {
+            width: 200px;
+            padding-left: 0;
+            list-style: none;
+        }
+
+        .selectpicker .dropdown-menu ul>li {
+            display: block;
+            padding: 4px 0 4px 20px;
+            cursor: pointer;
+        }
+
+        .alert-warning {
+            background-color: #fcf8e3;
+            border-color: #faebcc;
+            color: #8a6d3b;
+        }
+
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
+
+        b,
+        strong {
+            font-weight: 700;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="row">
+        <div class="col-sm-8">
+            <div id="bts-ex-4" class="selectpicker" data-live="true">
+                <button data-id="prov" type="button" class="btn btn-lg btn-block btn-default dropdown-toggle">
+                    <span class="placeholder">Choose an option</span>
+                    <span class="caret"></span>
+                </button>
+                <div class="dropdown-menu">
+                    <div class="live-filtering" data-clear="true" data-autocomplete="true" data-keys="true">
+                        <label class="sr-only" for="input-bts-ex-4">Search in the list</label>
+                        <div class="search-box">
+                            <div class="input-group">
+                                <!-- <span class="input-group-addon" id="search-icon3">
+                                    <span class="fa fa-search"></span>
+                                    <a href="#" class="fa fa-times hide filter-clear">
+                                        <span class="sr-only">Clear filter</span>
+                                    </a>
+                                </span> -->
+                                <input type="text" placeholder="Search in the list" id="input-bts-ex-4" class="form-control live-search" aria-describedby="search-icon3"
+                                    tabindex="1" />
+                            </div>
+                        </div>
+                        <div class="list-to-filter">
+                            <ul class="list-unstyled">
+                                <li class="filter-item items" data-filter="item 1" data-value="1">item 1</li>
+                                <li class="filter-item items" data-filter="item 2" data-value="2">item 2</li>
+                                <li class="filter-item items" data-filter="item 3" data-value="3">item 3</li>
+                                <li class="filter-item items" data-filter="item 4" data-value="4">item 4</li>
+                                <li class="filter-item items" data-filter="item 5" data-value="5">item 5</li>
+                                <li class="filter-item items" data-filter="item 1" data-value="1">item 1</li>
+                                <li class="filter-item items" data-filter="item 2" data-value="2">item 2</li>
+                                <li class="filter-item items" data-filter="item 3" data-value="3">item 3</li>
+                                <li class="filter-item items" data-filter="item 4" data-value="4">item 4</li>
+                                <li class="filter-item items" data-filter="item 5" data-value="5">item 5</li>
+                                <li class="filter-item items" data-filter="item 1" data-value="1">item 1</li>
+                                <li class="filter-item items" data-filter="item 2" data-value="2">item 2</li>
+                                <li class="filter-item items" data-filter="item 3" data-value="3">item 3</li>
+                                <li class="filter-item items" data-filter="item 4" data-value="4">item 4</li>
+                                <li class="filter-item items" data-filter="item 5" data-value="5">item 5</li>
+                                <li class="filter-item items" data-filter="item 1" data-value="1">item 1</li>
+                                <li class="filter-item items" data-filter="item 2" data-value="2">item 2</li>
+                                <li class="filter-item items" data-filter="item 3" data-value="3">item 3</li>
+                                <li class="filter-item items" data-filter="item 4" data-value="4">item 4</li>
+                                <li class="filter-item items" data-filter="item 5" data-value="5">item 5</li>
+                                <li class="filter-item items" data-filter="item 1" data-value="1">item 1</li>
+                                <li class="filter-item items" data-filter="item 2" data-value="2">item 2</li>
+                                <li class="filter-item items" data-filter="item 3" data-value="3">item 3</li>
+                                <li class="filter-item items" data-filter="item 4" data-value="4">item 4</li>
+                                <li class="filter-item items" data-filter="item 5" data-value="5">item 5</li>
+                            </ul>
+                            <div class="no-search-results">
+                                <div class="alert alert-warning" role="alert">
+                                    <i class="fa fa-warning margin-right-sm"></i>No entry for
+                                    <strong>'
+                                        <span></span>'</strong> was found.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" name="bts-ex-4" value="">
+            </div>
+        </div>
+    </div>
+</body>
+<script src="../jquery.version/jquery-1.10.1.js"></script>
+<script>
+    $('.dropdown-toggle').click(function () {
+        $('.dropdown-menu').show();
+    })
+
+    function submitTags(drugs_component, component_items) {
+        var _i = '<ie class="cancel_selected" onclick="deleteDrugsTag(this)">×</ie>',
+            $span = $('<span></span>').addClass('selected_drugs'),
+            input = $('.drug_tag').find('input');
+
+        var _hidden = new Array(),
+            list_tag = input.val().replace(' ', '');
+
+        if (drugs_component === 'all') {
+            component_items.each(function (e) {
+
+                if (e !== 0 && input.val() === '') {
+                    // 去除全部的li，把剩余的添加数组
+                    _hidden.push($(this).attr('data-id'));
+                    $span.attr('data-id', $(this).attr('data-id')).html($(this).text() + _i).appendTo('.drug_tag');
+                } else if (e !== 0 && input.val() !== '') {
+                    if (input.val().indexOf($(this).attr('data-id')) < 0) {
+                        _hidden.push($(this).attr('data-id'));
+                        $span.attr('data-id', $(this).attr('data-id')).html($(this).text() + _i).appendTo('.drug_tag');
+                    }
+                }
+            });
+        } else if (drugs_component !== '') {
+            if (input.val() === '') {
+                _hidden.push(drugs_component);
+                $span.attr('data-id', drugs_component).html(drugs_component_text + _i).appendTo('.drug_tag');
+            } else {
+                if (input.val().indexOf(drugs_component) < 0) {
+                    _hidden.push(drugs_component);
+                    $span.attr('data-id', drugs_component).html(drugs_component_text + _i).appendTo('.drug_tag');
+                }
+            }
+
+        }
+
+        if (list_tag) {
+            list_tag += ',' + _hidden.join(',')
+        } else {
+            list_tag = _hidden.join(',');
+        }
+
+        return list_tag;
+    }
+
+    /* 选择tag */
+    $('.queding').click(function () {
+        var drugs_component = $('.drugs_component').find('.filter-selected').val(),
+            drugs_component_text = $('.drugs_component').find('.placeholder').text(),
+            drugs_generic = $('.drugs_generic').find('.filter-selected').val(),
+            drugs_generic_text = $('.drugs_generic').find('.placeholder').text();
+        var component_items = $('.drugs_component').find('.items'),
+            generic_items = $('.drugs_generic').find('.items');
+
+        var _i = '<ie class="cancel_selected" onclick="deleteDrugsTag(this)">×</ie>',
+            $span = $('<span></span>').addClass('selected_drugs'),
+            input = $('.drug_tag').find('input');
+
+        var _hidden = new Array(),
+            list_tags = input.val().replace(' ', '');
+
+
+        // 方法一：
+        if (drugs_component === 'all') {
+            component_items.each(function (e) {
+                if (e !== 0 && list_tags === '') {
+                    // 去除全部的li，把剩余的添加数组
+                    _hidden.push($(this).attr('data-id'));
+                    $span.attr('data-id', $(this).attr('data-id')).html($(this).text() + _i).appendTo('.drug_tag');
+                } else if (e !== 0 && list_tags !== '') {
+                    if (list_tags.indexOf($(this).attr('data-id')) < 0) {
+                        _hidden.push($(this).attr('data-id'));
+                        $span.attr('data-id', $(this).attr('data-id')).html($(this).text() + _i).appendTo('.drug_tag');
+                    }
+                }
+            });
+        } else if (drugs_component !== '') {
+            if (list_tags === '') {
+                _hidden.push(drugs_component);
+                $span.attr('data-id', drugs_component).html(drugs_component_text + _i).appendTo('.drug_tag');
+            } else {
+                if (list_tags.indexOf(drugs_component) < 0) {
+                    _hidden.push(drugs_component);
+                    $span.attr('data-id', drugs_component).html(drugs_component_text + _i).appendTo('.drug_tag');
+                }
+            }
+
+        }
+
+        if (drugs_generic !== '') {
+            if (list_tags === '') {
+                _hidden.push(drugs_generic);
+                $span.attr('data-id', drugs_generic).html(drugs_generic_text + _i).appendTo('.drug_tag');
+            } else {
+                if (list_tags.indexOf(drugs_generic) < 0) {
+                    _hidden.push(drugs_generic);
+                    $span.attr('data-id', drugs_generic).html(drugs_generic_text + _i).appendTo('.drug_tag');
+                }
+            }
+        }
+        if (list_tags !== '') {
+            list_tags += ',' + _hidden.join(',')
+        } else {
+            list_tags = _hidden.join(',');
+        }
+        input.val(list_tags);
+
+        // 方法二：
+        // 新增无标签
+        if (input.length === 0 || input.val() === '') {
+            if (drugs_component === 'all') {
+                $('.drugs_component').find('.items').each(function (e) {
+                    if (e !== 0) {
+                        //console.log($.inArray($(this).attr('data-id'), _hidden));
+                        _hidden.push($(this).attr('data-id'));
+                        $('<span></span>').addClass('selected_drugs').attr('data-id', $(this).attr('data-id')).html($(this).text() + _i).appendTo('.drug_tag');
+                    }
+                });
+            } else if (drugs_component !== '') {
+                _hidden.push(drugs_component);
+                $('<span></span>').addClass('selected_drugs').attr('data-id', drugs_component).html(drugs_component_text + _i).appendTo('.drug_tag');
+            }
+
+            if (drugs_generic === 'all') {
+                $('.drugs_generic').find('.items').each(function (e) {
+                    if (e !== 0) {
+                        _hidden.push($(this).attr('data-id'));
+                        $('<span></span>').addClass('selected_drugs').attr('data-id', $(this).attr('data-id')).html($(this).text() + _i).appendTo('.drug_tag');
+                    }
+                });
+            } else {
+                _hidden.push(drugs_generic);
+                $('<span></span>').addClass('selected_drugs').attr('data-id', drugs_generic).html(drugs_generic_text + _i).appendTo('.drug_tag');
+            }
+            console.log(_hidden);
+            input.val(_hidden.join(','));
+
+        }
+        // 有标签
+        else {
+
+            var list_tag = input.val().replace(' ', '');
+
+            if (drugs_component === 'all') {
+                $('.drugs_component').find('.items').each(function (e) {
+                    if (e !== 0) {
+                        if (list_tag.indexOf($(this).attr('data-id')) < 0) {
+                            _hidden.push($(this).attr('data-id'));
+                            $('<span></span>').addClass('selected_drugs').attr('data-id', $(this).attr('data-id')).html($(this).text() + _i).appendTo('.drug_tag');
+                        }
+                    }
+                });
+            } else if (drugs_component !== '') {
+                if (list_tag.indexOf(drugs_component) < 0) {
+                    _hidden.push(drugs_component);
+                    $('<span></span>').addClass('selected_drugs').attr('data-id', drugs_component).html(drugs_component_text + _i).appendTo('.drug_tag');
+                }
+            }
+
+            if (drugs_generic === 'all') {
+                $('.drugs_generic').find('.items').each(function (e) {
+                    if (e !== 0) {
+                        if (list_tag.indexOf($(this).attr('data-id')) < 0) {
+                            _hidden.push($(this).attr('data-id'));
+                            $('<span></span>').addClass('selected_drugs').attr('data-id', $(this).attr('data-id')).html($(this).text() + _i).appendTo('.drug_tag');
+                        }
+                    }
+                });
+            } else {
+                if (list_tag.indexOf(drugs_generic) < 0) {
+                    _hidden.push(drugs_generic);
+                    $('<span></span>').addClass('selected_drugs').attr('data-id', drugs_generic).html(drugs_generic_text + _i).appendTo('.drug_tag');
+                }
+            }
+            list_tag += ',' + _hidden.join(',');
+            input.val(list_tag);
+        }
+    });
+</script>
+
+</html>
