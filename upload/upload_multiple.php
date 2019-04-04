@@ -1,2 +1,2 @@
 <?php
-echo json_encode($_FILES['myfile']);
+echo json_encode($_FILES);

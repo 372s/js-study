@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../jquery.version/jquery-1.8.3.js"></script>
+</head>
+<body>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        #con {
+            width: 120px;
+        }
+        #fa {
+            width: 100%;
+            border: 1px #cccccc solid;
+            text-align: center;
+            cursor: pointer;
+        }
+        #list {
+            display:none;
+            list-style: none;
+            width: 100%;
+            border: 1px #cccccc solid;
+            cursor: pointer;
+        }
+        #list li {
+            text-align: center;
+        }
+    </style>
+    <div id="con">
+        <div id="fa">点我显示内容</div>
+        <ul id="list">
+            <li>话题</li>
+            <li>文章</li>
+        </ul>
+    </div>
+    <script>
+        
+        $(function () {
+            var $changeSkin = $("#fa"), $skinList = $("#list");
+            $changeSkin.mouseenter(function () {
+                $skinList.stop(true,true).show();
+            });
+            $changeSkin.mouseleave(function (e) {
+                $skinList.hide();
+            });
+            $skinList.mouseover(function () {
+                $(this).stop(true,true).show();
+            });
+            $skinList.mouseleave(function (e) {
+                $(this).hide();
+            })
+        });
+    </script>
+</body>
+</html>
