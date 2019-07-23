@@ -6,145 +6,79 @@
 
 <head>
 
-  <meta charset="UTF-8">
-
-  <title>Document</title>
-
-  <style type="text/css">
-    body {
-
-      font: 14px/1.2 "微软雅黑";
-
-    }
-
-
-
-    div {
-
-      width: 300px;
-
-      position: relative;
-
-      margin: 20px 0;
-
-      padding: 5px 10px;
-
-    }
-
-
-
-    .form_control {
-
-      border: 1px #ccc solid;
-
-    }
-
-
-
-    input[type="text"],
-
-    input[type="password"] {
-
-      border: none;
-
-      width: 100%;
-
-    }
-
-
-
-    .form_control.active {
-
-      border: 1px #32BC61 solid;
-
-      background-color: #fff;
-
-    }
-
-
-
-    .form_control.error {
-
-      border: 1px #f00 solid;
-
-      background-color: #FBF9BB;
-
-    }
-
-
-
-    .form_control.error input[type="text"],
-
-    .form_control.error input[type="password"] {
-
-      background-color: #FBF9BB;
-
-      color: #f00;
-
-    }
-
-
-
-    input[type="text"]:focus,
-
-    input[type="password"]:focus {
-
-      border: none;
-
-      outline: none;
-
-    }
-
-
-
-    .form_control .valid_message {
-
-      color: #32BC61;
-
-      position: absolute;
-
-      left: 325px;
-
-      top: 5px;
-
-      width: 200px;
-
-    }
-
-
-
-    .form_control.error .valid_message {
-
-      color: #f00;
-
-    }
-
-
-
-    .form_control.success .valid_message {
-
-      background: url(sucess.png) no-repeat;
-
-      left: auto;
-
-      right: 5px;
-
-      top: 4px;
-
-      width: 16px;
-
-      height: 16px;
-
-    }
-
-
-
-    .none {
-
-      display: none;
-
-    }
-  </style>
+    <meta charset="UTF-8">
+
+    <title>Document</title>
+
+    <style type="text/css">
+        body {
+            font: 14px/1.2 "微软雅黑";
+        }
+        
+        div {
+            width: 300px;
+            position: relative;
+            margin: 20px 0;
+            padding: 5px 10px;
+        }
+        
+        .form_control {
+            border: 1px #ccc solid;
+        }
+        
+        input[type="text"],
+        input[type="password"] {
+            border: none;
+            width: 100%;
+        }
+        
+        .form_control.active {
+            border: 1px #32BC61 solid;
+            background-color: #fff;
+        }
+        
+        .form_control.error {
+            border: 1px #f00 solid;
+            background-color: #FBF9BB;
+        }
+        
+        .form_control.error input[type="text"],
+        .form_control.error input[type="password"] {
+            background-color: #FBF9BB;
+            color: #f00;
+        }
+        
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            border: none;
+            outline: none;
+        }
+        
+        .form_control .valid_message {
+            color: #32BC61;
+            position: absolute;
+            left: 325px;
+            top: 5px;
+            width: 200px;
+        }
+        
+        .form_control.error .valid_message {
+            color: #f00;
+        }
+        
+        .form_control.success .valid_message {
+            background: url(sucess.png) no-repeat;
+            left: auto;
+            right: 5px;
+            top: 4px;
+            width: 16px;
+            height: 16px;
+        }
+        
+        .none {
+            display: none;
+        }
+    </style>
 
 </head>
 
@@ -152,32 +86,29 @@
 
 <body>
 
-  <form>
+    <form>
 
-    <div class="form_control">
+        <div class="form_control">
 
-      <input class="required" value="" type="text" name="email" data-tip="请输入您的邮箱" data-valid="isNonEmpty||isEmail"
-        data-error="email不能为空||邮箱格式不正确">
+            <input class="required" value="" type="text" name="email" data-tip="请输入您的邮箱" data-valid="isNonEmpty||isEmail" data-error="email不能为空||邮箱格式不正确">
 
-    </div>
+        </div>
 
-    <div class="form_control">
+        <div class="form_control">
 
-      <input class="required" value="" type="password" data-tip="请输入您的密码" data-valid="isNonEmpty||between:6-16" data-error="密码不能为空||密码长度6-16位"
-        name="nickname">
+            <input class="required" value="" type="password" data-tip="请输入您的密码" data-valid="isNonEmpty||between:6-16" data-error="密码不能为空||密码长度6-16位" name="nickname">
 
-    </div>
+        </div>
 
-    <div class="form_control">
+        <div class="form_control">
 
-      <input class="required" value="" type="text" name="email" data-tip="请输入您的姓名" data-valid="isNonEmpty||onlyZh||between:2-5"
-        data-error="姓名不能为空||姓名只能为中文||姓名长度为2-5位">
+            <input class="required" value="" type="text" name="email" data-tip="请输入您的姓名" data-valid="isNonEmpty||onlyZh||between:2-5" data-error="姓名不能为空||姓名只能为中文||姓名长度为2-5位">
 
-    </div>
+        </div>
 
-    <div class="form_control">
+        <div class="form_control">
 
-      <span class="required" data-valid="isChecked" data-error="性别必选" data-type="radio">
+            <span class="required" data-valid="isChecked" data-error="性别必选" data-type="radio">
 
         <label>
           <input type="radio" name="sex">男</label>
@@ -190,11 +121,11 @@
 
       </span>
 
-    </div>
+        </div>
 
-    <div class="form_control">
+        <div class="form_control">
 
-      <span class="required" data-valid="isChecked" data-error="标签至少选择一项" data-type="checkbox">
+            <span class="required" data-valid="isChecked" data-error="标签至少选择一项" data-type="checkbox">
 
         <label>
           <input type="checkbox" name="label">红</label>
@@ -207,11 +138,11 @@
 
       </span>
 
-    </div>
+        </div>
 
-    <div class="form_control">
+        <div class="form_control">
 
-      <select class="required" data-valid="isNonEmpty" data-error="省份必填">
+            <select class="required" data-valid="isNonEmpty" data-error="省份必填">
 
         <option value="">请选择省份</option>
 
@@ -237,64 +168,61 @@
 
       </select>
 
-    </div>
+        </div>
 
-    <div>
+        <div>
 
-      <input type="submit" value="提交">
+            <input type="submit" value="提交">
 
-    </div>
+        </div>
 
-  </form>
+    </form>
 
-  <script type="text/javascript" src="jquery-1.11.1.js"></script>
+    <script type="text/javascript" src="jquery-1.11.1.js"></script>
 
-  <script type="text/javascript" src="jquery-validate.js"></script>
+    <script type="text/javascript" src="jquery-validate.js"></script>
 
-  <script type="text/javascript">
-    $('form').validate({
+    <script type="text/javascript">
+        $('form').validate({
 
-      onFocus: function () {
+            onFocus: function() {
 
-        this.parent().addClass('active');
+                this.parent().addClass('active');
 
-        return false;
+                return false;
 
-      },
+            },
 
-      onBlur: function () {
+            onBlur: function() {
 
-        var $parent = this.parent();
+                var $parent = this.parent();
 
-        var _status = parseInt(this.attr('data-status'));
+                var _status = parseInt(this.attr('data-status'));
 
-        $parent.removeClass('active');
+                $parent.removeClass('active');
 
-        if (!_status) {
+                if (!_status) {
 
-          $parent.addClass('error');
+                    $parent.addClass('error');
 
-        }
+                }
 
-        return false;
+                return false;
 
-      }
+            }
 
-    });
+        });
 
 
 
-    $('form').on('submit', function (event) {
+        $('form').on('submit', function(event) {
 
-      event.preventDefault();
+            event.preventDefault();
 
-      $(this).validate('submitValidate'); //return boolean;
+            $(this).validate('submitValidate'); //return boolean;
 
-    });
-  </script>
-
+        });
+    </script>
 </body>
-
-
 
 </html>
